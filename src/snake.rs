@@ -1,3 +1,4 @@
+use std::collections::LinkedList;
 use crate::drawing::{draw_block};
 use piston_window::Context;
 use piston_window::G2d;
@@ -29,7 +30,8 @@ impl Direction{
 pub struct Snake{
     pub size: u32,
     pub head: (u32,u32),
-    pub direction: Direction
+    pub direction: Direction,
+    pub body: LinkedList<(u32,u32)>
 }
 
 
@@ -40,26 +42,36 @@ impl Snake{
             size: size,
             head: position_head,
             direction: direction,
+            body: LinkedList::new()
         }
     }
     
     pub fn forward(&mut self){
+        let last_position_head = self.head;
+        //Avancer tête
         match self.direction{
             Direction::Up => self.head.0 -= 1,
             Direction::Down => self.head.0 += 1,
             Direction::Left => self.head.1 -= 1,
             Direction::Right => self.head.1 += 1,
-        }
-        //Avancer tête
+        }        
         //Avancer corps
+        if self.size > 1 {
+            self.body.pop_back();
+            self.body.push_front(last_position_head);
+        }
     }
 
-    pub fn eat(&mut self, food: Case){
-        match food {
-            Case::Empty => self.size = self.size,
-            Case::Wall => self.size = self.size - self.size,
-            Case::Apple => self.size = self.size  + 1 ,
-            Case::Head => self.size = self.size - self.size,
+    pub fn eat(&mut self, case: Case){
+        match case {
+            Case::Empty => (),
+            Case::Wall => self.size = 0,
+            Case::Apple => {
+                self.size +=  1 ;
+                self.body.push_front(self.head); 
+            },
+            Case::Head => self.size = 0,
+            Case::Corpse => self.size = 0,
         }
     }
 
@@ -68,6 +80,9 @@ impl Snake{
     }
 
     pub fn draw(&self, con: &Context, g: &mut G2d) {
-        draw_block(HEAD_COLOR, self.head.1 as i32, self.head.0 as i32,con, g)
+        draw_block(HEAD_COLOR, self.head.1 as i32, self.head.0 as i32,con, g);
+        for i in self.body.clone(){ 
+            draw_block(HEAD_COLOR, i.1 as i32, i.0 as i32,con, g);
+        }
     }
 }
