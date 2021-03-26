@@ -12,7 +12,7 @@ Download Rust compiler from [here](https://www.rust-lang.org/en-US/), change the
 
 The executable binary will appear in `target/debug`, called `snake`.
 
-You can run without build with (in the project directory):
+You can run without building with (in the project directory):
 
 ```
 > cargo run
