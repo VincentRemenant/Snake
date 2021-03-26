@@ -70,8 +70,7 @@ impl Snake{
                 self.size +=  1 ;
                 self.body.push_front(self.head); 
             },
-            Case::Head => self.size = 0,
-            Case::Corpse => self.size = 0,
+            Case::Snake => self.size = 0,
         }
     }
 

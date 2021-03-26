@@ -18,10 +18,7 @@ fn main() {
     let y = 25;
     //declaration of object
     let snake = Snake::new(1, (1,1) , Direction::Right);    
-    let mut map = Map::new(x,y);
-    map.change_case(10, 10, Case::Apple);
-    map.change_case(4, 7, Case::Apple);
-    map.change_case(14, 4, Case::Apple);
+    let map = Map::new(x,y);
     let mut game = Game::new(map, snake);
 
     //Define size of window relative to map

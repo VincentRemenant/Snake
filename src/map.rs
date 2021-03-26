@@ -9,9 +9,9 @@ const WALL_COLOR: Color = [0.741, 0.765, 0.78, 1.0];
 const GAMEOVER_COLOR: Color = [0.91, 0.30, 0.24, 0.5];
 
 pub struct Map {
-    height: usize,
-    width: usize,
-    space: Vec<Vec<Case>>
+    pub height: usize,
+    pub width: usize,
+    pub space: Vec<Vec<Case>>
 }
 
 impl Map{
@@ -75,7 +75,6 @@ pub enum Case{
     Empty,
     Wall,
     Apple,
-    Head,
-    Corpse
+    Snake,
 }
 
